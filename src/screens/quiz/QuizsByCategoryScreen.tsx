@@ -5,13 +5,19 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
-  SafeAreaView,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { categoriesData } from '../../data/categoriesData';
 import { ThemeContext } from '../../context/ThemeContext';
 import CustomHeader from '../../components/CustomHeader';
 import FloatingMenuButton from '../../components/FloatingMenuButton';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+// AdMob Imports
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+
+// Banner Ad Unit ID
+const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-xxxxxxxxxxxxxxxx';
 
 export default function QuizsByCategoryScreen({ route, navigation }: any) {
   const { colors } = useContext(ThemeContext);
@@ -25,16 +31,17 @@ export default function QuizsByCategoryScreen({ route, navigation }: any) {
     },
     listContent: {
       padding: 15,
+      paddingBottom: 70, // Banner-er jonno ektu extra space niche
     },
     quizCard: {
       backgroundColor: colors.cardBackground,
       borderRadius: 12,
       marginBottom: 15,
+      elevation: 3,
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
       shadowRadius: 4,
-      elevation: 3,
     },
     cardContent: {
       padding: 15,
@@ -76,12 +83,21 @@ export default function QuizsByCategoryScreen({ route, navigation }: any) {
       fontSize: 12,
       color: colors.secondaryText,
     },
+    adContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.cardBackground,
+      borderTopWidth: 1,
+      borderTopColor: colors.border,
+    },
   });
 
   if (!category) {
     return (
       <SafeAreaView style={dynamicStyles.container}>
-        <Text style={{ color: colors.text }}>Category not found</Text>
+        <Text style={{ color: colors.text, textAlign: 'center', marginTop: 20 }}>
+          Category not found
+        </Text>
       </SafeAreaView>
     );
   }
@@ -125,6 +141,19 @@ export default function QuizsByCategoryScreen({ route, navigation }: any) {
         contentContainerStyle={dynamicStyles.listContent}
         scrollEnabled={true}
       />
+
+      {/* --- Banner Ad Section (Stick to bottom) --- */}
+      <View style={dynamicStyles.adContainer}>
+        <BannerAd
+          unitId={adUnitId}
+          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+          requestOptions={{
+            requestNonPersonalizedAdsOnly: true,
+          }}
+          onAdFailedToLoad={(error) => console.error('Banner Ad Error:', error)}
+        />
+      </View>
+
       <FloatingMenuButton onPress={() => navigation.openDrawer()} />
     </SafeAreaView>
   );

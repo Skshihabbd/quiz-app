@@ -48,12 +48,12 @@ export default function TabNavigator() {
       <Tab.Screen
         name="Quiz"
         component={QuizNavigator}
-        options={{ title: 'Quizzes' }}
+        options={{ title: 'Quizy' }}
       />
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}
-        options={{ title: 'Settings', headerShown: true }}
+        options={{ title: 'Quizy', headerShown: true }}
       />
     </Tab.Navigator>
   );

@@ -1,3 +1,10 @@
+// Auth related screens
+export type AuthStackParamList = {
+  Login: undefined;
+  Register: undefined;
+};
+
+
 export type QuizStackParamList = {
   Categories: undefined;
   QuizzesByCategory: { categoryId: string };

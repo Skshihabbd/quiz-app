@@ -22,7 +22,7 @@ export default function QuizNavigator() {
         headerTintColor: colors.headerText,
         headerTitleStyle: {
           fontWeight: 'bold',
-          fontSize: 18,
+          fontSize: 25,
         },
       }}
     >
@@ -30,7 +30,7 @@ export default function QuizNavigator() {
         name="Categories"
         component={CategoryListScreen}
         options={{
-          title: 'Quiz Categories',
+          title: 'Quizy',
           headerLeft: () => null,
         }}
       />
@@ -38,14 +38,14 @@ export default function QuizNavigator() {
         name="QuizzesByCategory"
         component={QuizsByCategoryScreen}
         options={{
-          title: 'Quizzes',
+          title: 'Quizy',
         }}
       />
       <Stack.Screen
         name="Quiz"
         component={QuizScreen}
         options={{
-          title: 'Quiz',
+          title: 'Quizy',
         }}
       />
       <Stack.Screen

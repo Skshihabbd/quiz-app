@@ -3,13 +3,13 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ThemeContext } from '../../context/ThemeContext';
 import CustomHeader from '../../components/CustomHeader';
 import FloatingMenuButton from '../../components/FloatingMenuButton';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ResultScreen({ route, navigation }: any) {
   const { colors } = useContext(ThemeContext);
