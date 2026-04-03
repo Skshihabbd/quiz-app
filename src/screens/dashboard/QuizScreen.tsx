@@ -19,38 +19,35 @@ import { TestIds, useInterstitialAd } from 'react-native-google-mobile-ads';
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-xxxxxxxxxxxxxxxx'; 
 
 export default function QuizScreen({ route, navigation }: any) {
-  const { colors } = useContext(ThemeContext);
-  
-  // ১. Hooks shobar upore thakte hobe (Unconditional)
+  // context theke 'mode' extract korar chesta korun jodi thake
+  const theme = useContext(ThemeContext);
+  const colors = theme.colors;
+  const mode = (theme as any).mode; // TypeScript error bypass korar jonno
+
   const [current, setCurrent] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [answered, setAnswered] = useState(false);
 
-  // AdMob Logic
   const { isLoaded, isClosed, load, show } = useInterstitialAd(adUnitId, {
     requestNonPersonalizedAdsOnly: true,
   });
 
-  // ২. Data extraction (Hooks-er niche)
   const { quizId, categoryId } = route.params || {};
   const category = categoriesData.find(c => c.id === categoryId);
   const quiz = category?.quizzes.find(q => q.id === quizId);
   const question = quiz?.questions[current];
 
-  // ৩. Ad Logic Effects
   useEffect(() => {
     load();
   }, [load]);
 
-  // Ad close hole result-e jabe
   useEffect(() => {
     if (isClosed) {
       navigateToResult();
     }
   }, [isClosed]);
 
-  // ৪. Navigation Logic
   const navigateToResult = useCallback(() => {
     navigation.navigate('Result', {
       score: score,
@@ -59,7 +56,6 @@ export default function QuizScreen({ route, navigation }: any) {
     });
   }, [navigation, score, quiz]);
 
-  // ৫. Event Handlers
   const handleAnswer = (index: number) => {
     if (answered) return;
     setSelectedAnswer(index);
@@ -75,7 +71,6 @@ export default function QuizScreen({ route, navigation }: any) {
       setSelectedAnswer(null);
       setAnswered(false);
     } else {
-      // Shobar shesh-e ad dekhabe
       if (isLoaded) {
         show();
       } else {
@@ -95,7 +90,6 @@ export default function QuizScreen({ route, navigation }: any) {
     ]);
   };
 
-  // ৬. Conditional Rendering (Hooks logic shesh hobar por)
   if (!quiz || !question) {
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: colors.background, justifyContent: 'center', alignItems: 'center' }}>
@@ -110,16 +104,17 @@ export default function QuizScreen({ route, navigation }: any) {
     question: { fontSize: 18, fontWeight: '600', color: colors.text, marginBottom: 24, lineHeight: 26 },
     optionsContainer: { gap: 12 },
     optionButton: { padding: 16, borderWidth: 2, borderColor: colors.border, borderRadius: 8, backgroundColor: colors.cardBackground },
-    optionButtonSelected: { borderColor: '#007bff', backgroundColor: colors.mode === 'dark' ? '#1a2e4d' : '#e7f1ff' },
-    optionButtonCorrect: { borderColor: colors.correct, backgroundColor: colors.mode === 'dark' ? '#1b3321' : '#d4edda' },
-    optionButtonWrong: { borderColor: colors.wrong, backgroundColor: colors.mode === 'dark' ? '#3d1c1e' : '#f8d7da' },
+    // Yekhane 'mode' chilo sekhane color directly ba ternary use kora hoyeche
+    optionButtonSelected: { borderColor: '#007bff', backgroundColor: mode === 'dark' ? '#1a2e4d' : '#e7f1ff' },
+    optionButtonCorrect: { borderColor: colors.correct, backgroundColor: mode === 'dark' ? '#1b3321' : '#d4edda' },
+    optionButtonWrong: { borderColor: colors.wrong, backgroundColor: mode === 'dark' ? '#3d1c1e' : '#f8d7da' },
     optionText: { fontSize: 16, color: colors.text, fontWeight: '500' },
     optionTextSelected: { color: '#007bff' },
     optionTextCorrect: { color: colors.correct },
     optionTextWrong: { color: colors.wrong },
     feedback: { marginTop: 20, padding: 12, borderRadius: 8, borderLeftWidth: 4 },
-    feedbackCorrect: { backgroundColor: colors.mode === 'dark' ? '#1b3321' : '#d4edda', borderLeftColor: colors.correct },
-    feedbackWrong: { backgroundColor: colors.mode === 'dark' ? '#3d1c1e' : '#f8d7da', borderLeftColor: colors.wrong },
+    feedbackCorrect: { backgroundColor: mode === 'dark' ? '#1b3321' : '#d4edda', borderLeftColor: colors.correct },
+    feedbackWrong: { backgroundColor: mode === 'dark' ? '#3d1c1e' : '#f8d7da', borderLeftColor: colors.wrong },
     feedbackText: { fontSize: 16, fontWeight: 'bold', marginBottom: 4, color: colors.text },
     feedbackSubText: { fontSize: 14, marginTop: 4, color: colors.text },
     footer: { padding: 20, backgroundColor: colors.cardBackground, borderTopWidth: 1, borderTopColor: colors.border, flexDirection: 'row', justifyContent: 'space-between', gap: 10 },
@@ -137,7 +132,7 @@ export default function QuizScreen({ route, navigation }: any) {
         onBackPress={handleQuit}
         showBack={true}
       />
-
+      {/* ... Rest of the UI remains same ... */}
       <View style={dynamicStyles.content}>
         <Text style={dynamicStyles.question}>{question.question}</Text>
         <View style={dynamicStyles.optionsContainer}>
