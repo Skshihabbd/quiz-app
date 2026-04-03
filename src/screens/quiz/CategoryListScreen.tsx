@@ -70,7 +70,7 @@ useFocusEffect(
 const handleCategoryPress = (categoryId: string) => {
   if (isLoaded && !isShowingAd.current) {
     isShowingAd.current = true;
-    show();
+    // show();
   }
   navigation.navigate('QuizzesByCategory', { categoryId });
 };

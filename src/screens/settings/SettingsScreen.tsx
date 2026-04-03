@@ -6,13 +6,14 @@ import {
   StyleSheet,
   Alert,
   TouchableOpacity,
-  SafeAreaView,
+  
   ScrollView,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ThemeContext } from '../../context/ThemeContext';
 import CustomHeader from '../../components/CustomHeader';
 import FloatingMenuButton from '../../components/FloatingMenuButton';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function SettingsScreen({ navigation }: any) {
   const { isDarkMode, toggleDarkMode, colors } = useContext(ThemeContext);
