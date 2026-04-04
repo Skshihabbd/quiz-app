@@ -55,26 +55,28 @@ export default function CustomHeader({
   });
 
   return (
-    <View style={styles.container}>
-      <View style={styles.leftSection}>
-        {showBack && (
-          <TouchableOpacity
-            style={styles.iconButton}
-            onPress={onBackPress}
-            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-          >
-            <Ionicons name="arrow-back" size={28} color="#007bff" />
-          </TouchableOpacity>
-        )}
-        <Text style={styles.title}>{title}</Text>
-      </View>
+   <View style={styles.container}>
+  <View style={styles.leftSection}>
+    
+    {/* Menu icon LEFT side */}
+    <TouchableOpacity
+      style={styles.iconButton}
+      onPress={onMenuPress}
+    >
+      <Ionicons name="menu" size={28} color={colors.headerText} />
+    </TouchableOpacity>
+
+    {showBack && (
       <TouchableOpacity
         style={styles.iconButton}
-        onPress={onMenuPress}
-        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        onPress={onBackPress}
       >
-        <Ionicons name="menu" size={28} color={colors.headerText} />
+        <Ionicons name="arrow-back" size={28} color="#007bff" />
       </TouchableOpacity>
-    </View>
+    )}
+
+    <Text style={styles.title}>{title}</Text>
+  </View>
+</View>
   );
 }

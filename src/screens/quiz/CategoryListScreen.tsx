@@ -60,7 +60,7 @@ useFocusEffect(
         console.log("Timer trigger: Loading Ad (Not ready)");
         load();
       }
-    }, 20000); // 20 seconds
+    }, 200000); // 20 seconds
 
     return () => clearInterval(timer);
   }, [isLoaded, load, show])

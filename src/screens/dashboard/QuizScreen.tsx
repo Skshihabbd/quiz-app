@@ -1,12 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useContext, useEffect, useCallback } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { categoriesData } from '../../data/categoriesData';
 import { ThemeContext } from '../../context/ThemeContext';
 import CustomHeader from '../../components/CustomHeader';
@@ -16,7 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 // AdMob Imports
 import { TestIds, useInterstitialAd } from 'react-native-google-mobile-ads';
 
-const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-xxxxxxxxxxxxxxxx'; 
+const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-xxxxxxxxxxxxxxxx';
 
 export default function QuizScreen({ route, navigation }: any) {
   // context theke 'mode' extract korar chesta korun jodi thake
@@ -92,7 +86,14 @@ export default function QuizScreen({ route, navigation }: any) {
 
   if (!quiz || !question) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: colors.background, justifyContent: 'center', alignItems: 'center' }}>
+      <SafeAreaView
+        style={{
+          flex: 1,
+          backgroundColor: colors.background,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
         <Text style={{ color: colors.text }}>Quiz not found</Text>
       </SafeAreaView>
     );
@@ -101,26 +102,85 @@ export default function QuizScreen({ route, navigation }: any) {
   const dynamicStyles = StyleSheet.create({
     container: { flex: 1, backgroundColor: colors.background },
     content: { flex: 1, padding: 20 },
-    question: { fontSize: 18, fontWeight: '600', color: colors.text, marginBottom: 24, lineHeight: 26 },
+    question: {
+      fontSize: 18,
+      fontWeight: '600',
+      color: colors.text,
+      marginBottom: 24,
+      lineHeight: 26,
+    },
     optionsContainer: { gap: 12 },
-    optionButton: { padding: 16, borderWidth: 2, borderColor: colors.border, borderRadius: 8, backgroundColor: colors.cardBackground },
+    optionButton: {
+      padding: 16,
+      borderWidth: 2,
+      borderColor: colors.border,
+      borderRadius: 8,
+      backgroundColor: colors.cardBackground,
+    },
     // Yekhane 'mode' chilo sekhane color directly ba ternary use kora hoyeche
-    optionButtonSelected: { borderColor: '#007bff', backgroundColor: mode === 'dark' ? '#1a2e4d' : '#e7f1ff' },
-    optionButtonCorrect: { borderColor: colors.correct, backgroundColor: mode === 'dark' ? '#1b3321' : '#d4edda' },
-    optionButtonWrong: { borderColor: colors.wrong, backgroundColor: mode === 'dark' ? '#3d1c1e' : '#f8d7da' },
+    optionButtonSelected: {
+      borderColor: '#007bff',
+      backgroundColor: mode === 'dark' ? '#1a2e4d' : '#e7f1ff',
+    },
+    optionButtonCorrect: {
+      borderColor: colors.correct,
+      backgroundColor: mode === 'dark' ? '#1b3321' : '#d4edda',
+    },
+    optionButtonWrong: {
+      borderColor: colors.wrong,
+      backgroundColor: mode === 'dark' ? '#3d1c1e' : '#f8d7da',
+    },
     optionText: { fontSize: 16, color: colors.text, fontWeight: '500' },
     optionTextSelected: { color: '#007bff' },
     optionTextCorrect: { color: colors.correct },
     optionTextWrong: { color: colors.wrong },
-    feedback: { marginTop: 20, padding: 12, borderRadius: 8, borderLeftWidth: 4 },
-    feedbackCorrect: { backgroundColor: mode === 'dark' ? '#1b3321' : '#d4edda', borderLeftColor: colors.correct },
-    feedbackWrong: { backgroundColor: mode === 'dark' ? '#3d1c1e' : '#f8d7da', borderLeftColor: colors.wrong },
-    feedbackText: { fontSize: 16, fontWeight: 'bold', marginBottom: 4, color: colors.text },
+    feedback: {
+      marginTop: 20,
+      padding: 12,
+      borderRadius: 8,
+      borderLeftWidth: 4,
+    },
+    feedbackCorrect: {
+      backgroundColor: mode === 'dark' ? '#1b3321' : '#d4edda',
+      borderLeftColor: colors.correct,
+    },
+    feedbackWrong: {
+      backgroundColor: mode === 'dark' ? '#3d1c1e' : '#f8d7da',
+      borderLeftColor: colors.wrong,
+    },
+    feedbackText: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      marginBottom: 4,
+      color: colors.text,
+    },
     feedbackSubText: { fontSize: 14, marginTop: 4, color: colors.text },
-    footer: { padding: 20, backgroundColor: colors.cardBackground, borderTopWidth: 1, borderTopColor: colors.border, flexDirection: 'row', justifyContent: 'space-between', gap: 10 },
-    nextButton: { flex: 1, paddingVertical: 12, backgroundColor: '#007bff', borderRadius: 6, justifyContent: 'center', alignItems: 'center' },
+    footer: {
+      padding: 20,
+      backgroundColor: colors.cardBackground,
+      borderTopWidth: 1,
+      borderTopColor: colors.border,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      gap: 10,
+    },
+    nextButton: {
+      flex: 1,
+      paddingVertical: 12,
+      backgroundColor: '#007bff',
+      borderRadius: 6,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
     nextButtonText: { color: 'white', fontSize: 16, fontWeight: 'bold' },
-    quitButton: { paddingVertical: 12, paddingHorizontal: 20, backgroundColor: '#dc3545', borderRadius: 6, justifyContent: 'center', alignItems: 'center' },
+    quitButton: {
+      paddingVertical: 12,
+      paddingHorizontal: 20,
+      backgroundColor: '#dc3545',
+      borderRadius: 6,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
     quitButtonText: { color: 'white', fontSize: 16, fontWeight: 'bold' },
   });
 
@@ -142,18 +202,30 @@ export default function QuizScreen({ route, navigation }: any) {
               style={[
                 dynamicStyles.optionButton,
                 selectedAnswer === index && dynamicStyles.optionButtonSelected,
-                answered && index === question.correctAnswer && dynamicStyles.optionButtonCorrect,
-                answered && selectedAnswer === index && index !== question.correctAnswer && dynamicStyles.optionButtonWrong,
+                answered &&
+                  index === question.correctAnswer &&
+                  dynamicStyles.optionButtonCorrect,
+                answered &&
+                  selectedAnswer === index &&
+                  index !== question.correctAnswer &&
+                  dynamicStyles.optionButtonWrong,
               ]}
               onPress={() => handleAnswer(index)}
               disabled={answered}
             >
-              <Text style={[
-                dynamicStyles.optionText,
-                selectedAnswer === index && dynamicStyles.optionTextSelected,
-                answered && index === question.correctAnswer && dynamicStyles.optionTextCorrect,
-                answered && selectedAnswer === index && index !== question.correctAnswer && dynamicStyles.optionTextWrong,
-              ]}>
+              <Text
+                style={[
+                  dynamicStyles.optionText,
+                  selectedAnswer === index && dynamicStyles.optionTextSelected,
+                  answered &&
+                    index === question.correctAnswer &&
+                    dynamicStyles.optionTextCorrect,
+                  answered &&
+                    selectedAnswer === index &&
+                    index !== question.correctAnswer &&
+                    dynamicStyles.optionTextWrong,
+                ]}
+              >
                 {String.fromCharCode(65 + index)}) {option}
               </Text>
             </TouchableOpacity>
@@ -161,16 +233,24 @@ export default function QuizScreen({ route, navigation }: any) {
         </View>
 
         {answered && (
-          <View style={[
-            dynamicStyles.feedback, 
-            selectedAnswer === question.correctAnswer ? dynamicStyles.feedbackCorrect : dynamicStyles.feedbackWrong
-          ]}>
+          <View
+            style={[
+              dynamicStyles.feedback,
+              selectedAnswer === question.correctAnswer
+                ? dynamicStyles.feedbackCorrect
+                : dynamicStyles.feedbackWrong,
+            ]}
+          >
             <Text style={dynamicStyles.feedbackText}>
-              {selectedAnswer === question.correctAnswer ? '✓ Correct!' : '✗ Incorrect!'}
+              {selectedAnswer === question.correctAnswer
+                ? '✓ Correct!'
+                : '✗ Incorrect!'}
             </Text>
             {selectedAnswer !== question.correctAnswer && (
               <Text style={dynamicStyles.feedbackSubText}>
-                Correct answer: {String.fromCharCode(65 + question.correctAnswer)} - {question.options[question.correctAnswer]}
+                Correct answer:{' '}
+                {String.fromCharCode(65 + question.correctAnswer)} -{' '}
+                {question.options[question.correctAnswer]}
               </Text>
             )}
           </View>
@@ -182,7 +262,10 @@ export default function QuizScreen({ route, navigation }: any) {
           <Text style={dynamicStyles.quitButtonText}>Quit</Text>
         </TouchableOpacity>
         {answered && (
-          <TouchableOpacity style={dynamicStyles.nextButton} onPress={handleNext}>
+          <TouchableOpacity
+            style={dynamicStyles.nextButton}
+            onPress={handleNext}
+          >
             <Text style={dynamicStyles.nextButtonText}>
               {current + 1 === quiz.questions.length ? 'Finish' : 'Next'}
             </Text>

@@ -9,7 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { DrawerParamList } from './types';
 import { ThemeContext } from '../context/ThemeContext';
 import SettingsScreen from '../screens/settings/SettingsScreen';
-// import ProfileScreen from '../screens/profile/ProfileScreen';
+ import ProfileScreen from '../screens/profile/ProfileScreen';
 import TabNavigator from './BottomTabNavigator';
 // import QuizNavigator from './QuizNavigator';
 
@@ -24,9 +24,9 @@ const QuizIcon = ({ color, size }: { color: string; size: number }) => (
 //   <Ionicons name="list" color={color} size={size} />
 // );
 
-// const ProfileIcon = ({ color, size }: { color: string; size: number }) => (
-//   <Ionicons name="person-circle" color={color} size={size} />
-// );
+const ProfileIcon = ({ color, size }: { color: string; size: number }) => (
+  <Ionicons name="document" color={color} size={size} />
+);
 
 const SettingsIcon = ({ color, size }: { color: string; size: number }) => (
   <Ionicons name="settings" color={color} size={size} />
@@ -34,7 +34,7 @@ const SettingsIcon = ({ color, size }: { color: string; size: number }) => (
 
 const MemoizedQuizIcon = React.memo(QuizIcon);
 // const MemoizedCategoriesIcon = React.memo(CategoriesIcon);
-// const MemoizedProfileIcon = React.memo(ProfileIcon);
+ const MemoizedProfileIcon = React.memo(ProfileIcon);
 const MemoizedSettingsIcon = React.memo(SettingsIcon);
 
 function DrawerContent(props: any) {
@@ -73,7 +73,7 @@ function DrawerContent(props: any) {
       <View style={styles.header}>
         <View style={styles.headerContent}>
           <Text style={styles.headerIcon}>📚</Text>
-          <Text style={styles.headerText}>Quiz Master</Text>
+          <Text style={styles.headerText}>Quizy</Text>
         </View>
       </View>
       <DrawerItemList {...props} />
@@ -130,16 +130,16 @@ export default function DrawerNavigator() {
           drawerIcon: props => <MemoizedQuizIcon {...props} />,
         }}
       />
-      {/* <Drawer.Screen
+      <Drawer.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
-          drawerLabel: 'My Profile',
+          drawerLabel: 'PDF',
           title: 'Profile',
           // eslint-disable-next-line react/no-unstable-nested-components
           drawerIcon: props => <MemoizedProfileIcon {...props} />,
         }}
-      /> */}
+      />
       <Drawer.Screen
         name="Settings"
         component={SettingsScreen}
